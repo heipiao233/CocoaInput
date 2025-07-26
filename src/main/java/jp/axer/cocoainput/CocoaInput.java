@@ -1,7 +1,6 @@
 package jp.axer.cocoainput;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,8 +27,7 @@ public class CocoaInput {
 	public static ConfigPack config = ConfigPack.DEFAULT_CONFIG;
     public static Logger LOGGER = LogManager.getLogger("CocoaInput:Mod");
 	
-	public CocoaInput(String loader, String zipfile) {
-		CocoaInput.LOGGER.info("Modloader:" + loader);
+	public CocoaInput() {
 		try {
 			switch (GLFW.glfwGetPlatform()) {
 				case GLFW.GLFW_PLATFORM_COCOA -> CocoaInput.applyController(new DarwinController());

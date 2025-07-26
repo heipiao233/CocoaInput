@@ -14,7 +14,7 @@ public class CocoaInputFabric implements ClientModInitializer {
 		CocoaInputFabric.instance=this;
 	}
 	public void onWindowLaunched(){
-		this.cocoainput=new CocoaInput("Fabric",null);
+		this.cocoainput=new CocoaInput();
 		CocoaInput.LOGGER.info("Fabric config setup");
 		var config = FabricLoader.getInstance().getConfigDir().resolve("cocoainput.json");
 		CocoaInput.LOGGER.info("Config path:"+config.toString());

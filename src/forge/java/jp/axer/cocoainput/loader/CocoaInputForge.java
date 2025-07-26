@@ -7,7 +7,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.ConfigScreenHandler;
 
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -25,7 +24,7 @@ public class CocoaInputForge {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-			this.instance=new CocoaInput("MinecraftForge",ModList.get().getModFileById("cocoainput").getFile().getFilePath().toString());
+			this.instance=new CocoaInput();
 			CocoaInput.LOGGER.info("Forge config setup");
 			CocoaInput.LOGGER.info("Config path:"+FMLPaths.CONFIGDIR.get().resolve("cocoainput.json"));
 			FCConfig.init("cocoainput",FMLPaths.CONFIGDIR.get().resolve("cocoainput.json"), FCConfig.class);
