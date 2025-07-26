@@ -5,11 +5,12 @@ import jp.axer.cocoainput.plugin.IMEReceiver;
 
 public class WaylandIMEOperator implements IMEOperator {
 	public IMEReceiver owner;
-	private boolean focus=false;
+	private boolean focus = false;
+
 	public WaylandIMEOperator(IMEReceiver op) {
-		this.owner=op;
+		this.owner = op;
 	}
-	
+
 	@Override
 	public void discardMarkedText() {
 		// TODO Auto-generated method stub
@@ -24,18 +25,17 @@ public class WaylandIMEOperator implements IMEOperator {
 
 	@Override
 	public void setFocused(boolean isFocused) {
-		if(isFocused==focus) {
-			return ;
+		if (isFocused == focus) {
+			return;
 		}
-		focus=isFocused;
-		if(isFocused) {
-			WaylandController.focusedOperator=this;
+		focus = isFocused;
+		if (isFocused) {
+			WaylandController.focusedOperator = this;
 			Handle.INSTANCE.focus();
-		}
-		else {
-			if(WaylandController.focusedOperator==this) {
+		} else {
+			if (WaylandController.focusedOperator == this) {
 				owner.insertText("");
-				WaylandController.focusedOperator=null;
+				WaylandController.focusedOperator = null;
 				Handle.INSTANCE.unfocus();
 			}
 		}

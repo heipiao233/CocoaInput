@@ -27,7 +27,7 @@ public class CocoaInput {
 	public static ConfigPack config = ConfigPack.DEFAULT_CONFIG;
     public static Logger LOGGER = LogManager.getLogger("CocoaInput:Mod");
 	
-	public CocoaInput() {
+	public static void setup() {
 		try {
 			switch (GLFW.glfwGetPlatform()) {
 				case GLFW.GLFW_PLATFORM_COCOA -> CocoaInput.applyController(new DarwinController());
@@ -59,10 +59,10 @@ public class CocoaInput {
 		return CocoaInput.controller;
 	}
 
-	public void distributeScreen(Screen sc) {
+	public static void distributeScreen(Screen sc) {
 		if (CocoaInput.getController() != null) {
 			try {
-				Field wrapper = sc.getClass().getField("wrapper");
+				Field wrapper = sc.getClass().getField("cocoainput$wrapper");
 				wrapper.setAccessible(true);
 				if (wrapper.get(sc) instanceof IMEReceiver)
 					return;

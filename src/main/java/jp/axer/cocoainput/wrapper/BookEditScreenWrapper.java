@@ -7,7 +7,6 @@ import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
 import jp.axer.cocoainput.util.Rect;
-import jp.axer.cocoainput.util.WrapperUtil;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.BookEditScreen;
 import net.minecraft.client.StringSplitter;
@@ -79,12 +78,7 @@ public class BookEditScreenWrapper extends IMEReceiver {
 
     @Override
     public Rect getRect() {
-        Font fontRendererObj = null;
-        try {
-            fontRendererObj = WrapperUtil.makeFont(owner);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Font fontRendererObj = owner.font;
         if (owner.isSigning) {
             return new Rect(
                     (fontRendererObj.width(owner.title.substring(0, originalCursorPosition)) / 2 + ((owner.width - 192) / 2) + 36 + (116 - 0) / 2),

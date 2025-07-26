@@ -23,7 +23,7 @@ public class EditBoxWrapper extends IMEReceiver {
     }
 
     public void setFocused(boolean newParam) {
-    	owner.setFormatter( ((abc,def) -> Component.literal(abc).getVisualOrderText()     ));
+    	owner.setFormatter(((abc,def) -> Component.literal(abc).getVisualOrderText()));
         myIME.setFocused(newParam);
     }
 

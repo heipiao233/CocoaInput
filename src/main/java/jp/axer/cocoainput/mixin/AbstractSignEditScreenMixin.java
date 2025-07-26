@@ -12,16 +12,16 @@ import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
 
 @Mixin(AbstractSignEditScreen.class)
 public class AbstractSignEditScreenMixin {
-	AbstractSignEditScreenWrapper wrapper;
+	AbstractSignEditScreenWrapper cocoainput$wrapper;
 	
 	@Inject(method="init",at=@At("RETURN"))
 	private void init(CallbackInfo ci) {
-		wrapper = new AbstractSignEditScreenWrapper((AbstractSignEditScreen)(Object)this);
+		cocoainput$wrapper = new AbstractSignEditScreenWrapper((AbstractSignEditScreen)(Object)this);
 	}
 	
 	@Redirect(method="tick",at = @At(value="FIELD", target="Lnet/minecraft/client/gui/screens/inventory/AbstractSignEditScreen;frame:I",opcode=Opcodes.PUTFIELD))
 	private void injectCursor(AbstractSignEditScreen esc, int n) {
-		if (wrapper == null) wrapper = new AbstractSignEditScreenWrapper((AbstractSignEditScreen)(Object)this);	// May come before init() is called by stendhal-1.3.3-1.19.jar
-		esc.frame = wrapper.renewCursorCounter();
+		if (cocoainput$wrapper == null) cocoainput$wrapper = new AbstractSignEditScreenWrapper((AbstractSignEditScreen)(Object)this);	// May come before init() is called by stendhal-1.3.3-1.19.jar
+		esc.frame = cocoainput$wrapper.renewCursorCounter();
 	}
 }

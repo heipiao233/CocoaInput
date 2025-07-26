@@ -15,7 +15,6 @@ import net.minecraftforge.fml.loading.FMLPaths;
 
 @Mod("cocoainput")
 public class CocoaInputForge {
-	private CocoaInput instance;
 
 	public CocoaInputForge(){
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -24,20 +23,21 @@ public class CocoaInputForge {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-			this.instance=new CocoaInput();
+			CocoaInput.setup();
 			CocoaInput.LOGGER.info("Forge config setup");
-			CocoaInput.LOGGER.info("Config path:"+FMLPaths.CONFIGDIR.get().resolve("cocoainput.json"));
-			FCConfig.init("cocoainput",FMLPaths.CONFIGDIR.get().resolve("cocoainput.json"), FCConfig.class);
+			var config = FMLPaths.CONFIGDIR.get().resolve("cocoainput.json");
+			CocoaInput.LOGGER.info("Config path:" + config);
+			FCConfig.init("cocoainput", config, FCConfig.class);
 			ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, ()->new ConfigScreenHandler.ConfigScreenFactory((mc,modListScreen)->new FCConfig().getScreen(modListScreen)));
 			CocoaInput.config=new FCConfig();
 			CocoaInput.LOGGER.info("ConfigPack:"+CocoaInput.config.isAdvancedPreeditDraw()+" "+CocoaInput.config.isNativeCharTyped());
 	}
 	@SubscribeEvent
     public void didChangeGui(ScreenEvent.Opening event) {
-		this.instance.distributeScreen(event.getScreen());
+		CocoaInput.distributeScreen(event.getScreen());
 	}
 	@SubscribeEvent
 	public void didChangeGui(ScreenEvent.Closing event) {
-		this.instance.distributeScreen(event.getScreen());
+		CocoaInput.distributeScreen(event.getScreen());
 	}
 }

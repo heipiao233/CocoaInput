@@ -8,13 +8,16 @@ import net.minecraft.client.gui.screens.Screen;
 
 public class CocoaInputFabric implements ClientModInitializer {
 	public static CocoaInputFabric instance;
-	public CocoaInput cocoainput;
+	private boolean up = false;
+
 	@Override
 	public void onInitializeClient() {
 		CocoaInputFabric.instance=this;
 	}
-	public void onWindowLaunched(){
-		this.cocoainput=new CocoaInput();
+
+	private void onWindowLaunched(){
+		this.up = true;
+		CocoaInput.setup();
 		CocoaInput.LOGGER.info("Fabric config setup");
 		var config = FabricLoader.getInstance().getConfigDir().resolve("cocoainput.json");
 		CocoaInput.LOGGER.info("Config path:"+config.toString());
@@ -24,10 +27,10 @@ public class CocoaInputFabric implements ClientModInitializer {
 	}
 
 	public void onChangeScreen(Screen sc){
-		if(this.cocoainput==null){
+		if (!this.up){
 			this.onWindowLaunched();
 			return;
 		}
-		this.cocoainput.distributeScreen(sc);
+		CocoaInput.distributeScreen(sc);
 	}
 }

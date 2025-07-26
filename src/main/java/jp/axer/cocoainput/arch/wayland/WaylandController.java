@@ -18,7 +18,7 @@ public class WaylandController implements CocoaInputController {
 	int preeditBefore = 0, preeditAfter = 0;
 	String toBeCommit = "";
 
-	Handle.PreeditCallback preedit_callback = (String str, int before, int after) -> {
+	Handle.PreeditCallback preeditCallback = (String str, int before, int after) -> {
         if (WaylandController.focusedOperator != null) {
 			toBePreedit = Objects.requireNonNullElse(str, "");
 			preeditBefore = before;
@@ -26,13 +26,13 @@ public class WaylandController implements CocoaInputController {
         }
     };
 
-	Handle.CommitCallback commit_callback = (str) -> {
+	Handle.CommitCallback commitCallback = (str) -> {
 		if (WaylandController.focusedOperator != null) {
 			toBeCommit = Objects.requireNonNullElse(str, "");
 		}
 	};
 
-	Handle.DoneCallback done_callback = () -> {
+	Handle.DoneCallback doneCallback = () -> {
         if (WaylandController.focusedOperator != null) {
 			if(!toBePreedit.isEmpty()) focusedOperator.owner.setMarkedText(toBePreedit, preeditBefore, preeditAfter);
 			if(!toBeCommit.isEmpty() || toBePreedit.isEmpty()) focusedOperator.owner.insertText(toBeCommit);
@@ -47,7 +47,7 @@ public class WaylandController implements CocoaInputController {
 		CocoaInput.LOGGER.info("This is Wayland Controller");
 		CocoaInput.copyLibrary("libwaylandcocoainput.so", "wayland/libwaylandcocoainput.so");
 		CocoaInput.LOGGER.info("Call clang initializer");
-		Handle.INSTANCE.initialize(this.done_callback, this.preedit_callback, this.commit_callback,
+		Handle.INSTANCE.initialize(this.doneCallback, this.preeditCallback, this.commitCallback,
 				GLFWNativeWayland.glfwGetWaylandDisplay(),
 				NativeLogger.info, NativeLogger.error, NativeLogger.debug);
 		Handle.INSTANCE.unfocus();
