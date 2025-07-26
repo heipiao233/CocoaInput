@@ -5,6 +5,7 @@ import jp.axer.cocoainput.plugin.CocoaInputController;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
 import jp.axer.cocoainput.util.NativeLogger;
+import jp.axer.cocoainput.util.Rect;
 import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFWNativeWayland;
 
@@ -36,6 +37,9 @@ public class WaylandController implements CocoaInputController {
         if (WaylandController.focusedOperator != null) {
 			if(!toBePreedit.isEmpty()) focusedOperator.owner.setMarkedText(toBePreedit, preeditBefore, preeditAfter);
 			if(!toBeCommit.isEmpty() || toBePreedit.isEmpty()) focusedOperator.owner.insertText(toBeCommit);
+			Rect rect = focusedOperator.owner.getRect();
+			float factor = (float) CocoaInput.getScreenScaledFactor();
+			Handle.INSTANCE.setRect(rect.getX() * factor, rect.getY() * factor, rect.getWidth() * factor, rect.getHeight() * factor);
 			preeditBefore = 0;
 			preeditAfter = 0;
 			toBePreedit = "";

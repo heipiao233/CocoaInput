@@ -2,11 +2,12 @@ package jp.axer.cocoainput.arch.wayland;
 
 import com.sun.jna.*;
 
-public interface Handle extends Library{
+public interface Handle extends Library {
 	Handle INSTANCE = Native.load("waylandcocoainput", Handle.class);
 	
 	void unfocus();
 	void focus();
+	void setRect(float x, float y, float w, float h);
 	void initialize(
 			DoneCallback doneCallback,
 			PreeditCallback preeditCallback,

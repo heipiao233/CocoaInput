@@ -96,6 +96,11 @@ void unfocus() {
     zwp_text_input_v3_commit(text_input);
 }
 
+void setRect(float x, float y, float w, float h) {
+    zwp_text_input_v3_set_cursor_rectangle(text_input, x, y, w, h);
+    zwp_text_input_v3_commit(text_input);
+}
+
 void initialize(
     void (*done)(),
     void (*preedit)(const char*, int32_t, int32_t),
