@@ -45,6 +45,7 @@ public class CocoaInput {
 			}
 			ModLogger.log("CocoaInput has been initialized.");
 		} catch (IOException e) {
+			CocoaInput.applyController(new DummyController());
 			ModLogger.error("IO Exception occurs during copying ");
 		}
 	}
@@ -76,16 +77,7 @@ public class CocoaInput {
 
 	public static void copyLibrary(String libraryName, String libraryPath) throws IOException {
 		InputStream libFile;
-		if (zipsource == null) {//Fabric case
-			libFile = CocoaInput.class.getResourceAsStream("/" + libraryPath);
-		} else {
-			try (ZipFile jarfile = new ZipFile(CocoaInput.zipsource)) {//Modファイルを検出し、jar内からライブラリを取り出す
-				libFile = jarfile.getInputStream(new ZipEntry(libraryPath));
-			} catch (FileNotFoundException e) {//存在しない場合はデバッグモードであるのでクラスパスからライブラリを取り出す
-				ModLogger.log("Couldn't get library path. Is this debug mode?'");
-				libFile = ClassLoader.getSystemResourceAsStream(libraryPath);
-			}
-		}
+		libFile = CocoaInput.class.getResourceAsStream("/" + libraryPath);
 		File nativeDir = new File(Minecraft.getInstance().gameDirectory.getAbsolutePath().concat("/native"));
 		File copyLibFile = new File(
 				Minecraft.getInstance().gameDirectory.getAbsolutePath().concat("/native/" + libraryName));
