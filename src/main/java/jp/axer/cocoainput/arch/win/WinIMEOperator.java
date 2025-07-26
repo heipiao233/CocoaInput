@@ -36,7 +36,7 @@ public class WinIMEOperator implements IMEOperator {
 		}
 		else {
 			if(WinController.focusedOperator==this) {
-				owner.insertText("", 0, 0);
+				owner.insertText("");
 				WinController.focusedOperator=null;
 				Handle.INSTANCE.set_focus(0);
 			}

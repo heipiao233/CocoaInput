@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "jp.axer.cocoainput.loader.FabricLoader"
+      "jp.axer.cocoainput.loader.CocoaInputFabric"
     ],
     "modmenu":[
       "jp.axer.cocoainput.loader.CocoaInputModMenu"

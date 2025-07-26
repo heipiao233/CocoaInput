@@ -21,35 +21,30 @@ public class X11Controller implements CocoaInputController {
 
 	static X11IMEOperator focusedOperator = null;
 
-	Handle.DrawCallback c_draw = new Handle.DrawCallback() {
-		public Pointer invoke(int caret, int chg_first, int chg_length, short length, boolean iswstring,
-				String rawstring, WString rawwstring, int primary, int secondary, int tertiary) {
-			Logger.log("Javaside draw begin");
-			String string = iswstring ? rawwstring.toString() : rawstring;
+	Handle.DrawCallback c_draw = (caret, chg_first, chg_length, length, iswstring, rawstring, rawwstring, primary, secondary, tertiary) -> {
+        Logger.log("Javaside draw begin");
+        String string = iswstring ? rawwstring.toString() : rawstring;
 
-			if (X11Controller.focusedOperator != null) {
-				GLFW.glfwSetKeyCallback(window, null);
-				X11Controller.focusedOperator.owner.setMarkedText(string, caret, tertiary - secondary, 0, 0);
-			}
-			Logger.log("Preedit:" + caret + " " + chg_first + " " + chg_length + " " + length + " " + primary + " "
-					+ secondary + " " + tertiary + " " + string);
-			int[] point = { 600, 600 };
-			Memory memory = new Memory(8L);
-			memory.write(0L, point, 0, 2);
-			Logger.log("Javaside draw end");
-			return (Pointer) memory;
-		}
-	};
+        if (X11Controller.focusedOperator != null) {
+            GLFW.glfwSetKeyCallback(window, null);
+            X11Controller.focusedOperator.owner.setMarkedText(string, caret, tertiary - secondary);
+        }
+        Logger.log("Preedit:" + caret + " " + chg_first + " " + chg_length + " " + length + " " + primary + " "
+                + secondary + " " + tertiary + " " + string);
+        int[] point = { 600, 600 };
+        Memory memory = new Memory(8L);
+        memory.write(0L, point, 0, 2);
+        Logger.log("Javaside draw end");
+        return (Pointer) memory;
+    };
 
-	Handle.DoneCallback c_done = new Handle.DoneCallback() {
-		public void invoke() {
-			Logger.log("javaside preedit done");
-			if (X11Controller.focusedOperator != null) {
-				X11Controller.focusedOperator.owner.insertText("", 0, 0);
-			}
-			setupKeyboardEvent();
-		}
-	};
+	Handle.DoneCallback c_done = () -> {
+        Logger.log("javaside preedit done");
+        if (X11Controller.focusedOperator != null) {
+            X11Controller.focusedOperator.owner.insertText("");
+        }
+        setupKeyboardEvent();
+    };
 
 	public static void setupKeyboardEvent() {
 		Minecraft.getInstance().keyboardHandler.setup(window);
@@ -57,8 +52,7 @@ public class X11Controller implements CocoaInputController {
 			Minecraft.getInstance().execute(() -> {
 				if (X11Controller.focusedOperator != null) {
 
-					X11Controller.focusedOperator.owner.insertText(String.valueOf(Character.toChars(p_228000_3_)), 0,
-							0);
+					X11Controller.focusedOperator.owner.insertText(String.valueOf(Character.toChars(p_228000_3_)));
 
 				} else {
 					Minecraft.getInstance().keyboardHandler.charTyped(p_228000_1_, p_228000_3_, p_228000_4_);
@@ -92,13 +86,6 @@ public class X11Controller implements CocoaInputController {
 
 	@Override
 	public void screenOpenNotify(Screen gui) {
-		try {
-			Field wrapper = gui.getClass().getField("wrapper");
-			wrapper.setAccessible(true);
-			if (wrapper.get(gui) instanceof IMEReceiver)
-				return;
-		} catch (Exception e) {
-			/* relax */}
 		if (X11Controller.focusedOperator != null) {
 			X11Controller.focusedOperator.setFocused(false);
 			X11Controller.focusedOperator = null;

@@ -4,20 +4,21 @@ import net.fabricmc.api.ClientModInitializer;
 import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.FCConfig;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.screens.Screen;
 
-public class FabricLoader implements ClientModInitializer {
-	public static FabricLoader instance;
+public class CocoaInputFabric implements ClientModInitializer {
+	public static CocoaInputFabric instance;
 	public CocoaInput cocoainput;
 	@Override
 	public void onInitializeClient() {
-		FabricLoader.instance=this;
+		CocoaInputFabric.instance=this;
 	}
 	public void onWindowLaunched(){
 		this.cocoainput=new CocoaInput("Fabric",null);
 		ModLogger.log("Fabric config setup");
-		ModLogger.log("Config path:"+net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir().resolve("cocoainput.json").toString());
-		FCConfig.init("cocoainput",net.fabricmc.loader.api.FabricLoader.getInstance().getConfigDir().resolve("cocoainput.json"), FCConfig.class);
+		ModLogger.log("Config path:"+FabricLoader.getInstance().getConfigDir().resolve("cocoainput.json").toString());
+		FCConfig.init("cocoainput", FabricLoader.getInstance().getConfigDir().resolve("cocoainput.json"), FCConfig.class);
 		CocoaInput.config=new FCConfig();
 		ModLogger.log("ConfigPack:"+CocoaInput.config.isAdvancedPreeditDraw()+" "+CocoaInput.config.isNativeCharTyped());
 	}

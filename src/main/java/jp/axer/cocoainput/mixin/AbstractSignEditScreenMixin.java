@@ -20,7 +20,7 @@ public class AbstractSignEditScreenMixin {
 	}
 	
 	@Redirect(method="tick",at = @At(value="FIELD", target="Lnet/minecraft/client/gui/screens/inventory/AbstractSignEditScreen;frame:I",opcode=Opcodes.PUTFIELD))
-	private void injectCurosr(AbstractSignEditScreen esc,int n) {
+	private void injectCursor(AbstractSignEditScreen esc, int n) {
 		if (wrapper == null) wrapper = new AbstractSignEditScreenWrapper((AbstractSignEditScreen)(Object)this);	// May come before init() is called by stendhal-1.3.3-1.19.jar
 		esc.frame = wrapper.renewCursorCounter();
 	}

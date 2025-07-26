@@ -3,7 +3,6 @@ package jp.axer.cocoainput.plugin;
 import java.util.function.BooleanSupplier;
 import org.jetbrains.annotations.Nullable;
 import jp.axer.cocoainput.CocoaInput;
-import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.PreeditFormatter;
 import jp.axer.cocoainput.util.Rect;
 import jp.axer.cocoainput.util.Tuple3;
@@ -20,15 +19,15 @@ public abstract class IMEReceiver {
 	private void replaceMarkedText(String text, int pos, int len)
 	{
 		//ModLogger.log("replaceMarkedText() ... (new StringBuffer(\"" + this.getText() + "\").replace(" + pos + ", " + (pos + len) + ", \"" + text + "\")");
-		this.setText((new StringBuffer(this.getText()))
-			.replace(pos, pos + len, text).toString());
+		try {
+			this.setText((new StringBuffer(this.getText()))
+					.replace(pos, pos + len, text).toString());
+		} catch (StringIndexOutOfBoundsException ignored) {
+
+		}
 	}
 
-	/*
-	 * position1 length1は下線と強調変換のため必須 position2 length2は意味をなしてない
-	 * positionの位置から文字数lengthの範囲という意味
-	 */
-	public void insertText(String aString, int position1, int length1) {//確定文字列 現状aString以外の引数は意味をなしてない
+	public void insertText(String aString) {//確定文字列 現状aString以外の引数は意味をなしてない
 		//ModLogger.log("just comming:(\"" + aString + "\") now:(\"" + getText() + "\") length:" + length);
 		if (!preeditBegin) {
 			originalCursorPosition = this.getCursorPos();
@@ -64,7 +63,7 @@ public abstract class IMEReceiver {
 		 */
 	}
 
-	public void setMarkedText(String aString, int position1, int length1, int position2, int length2) {
+	public void setMarkedText(String aString, int position1, int length1) {
 		if (!preeditBegin) {
 			originalCursorPosition = this.getCursorPos();
 			preeditBegin = true;
@@ -81,7 +80,7 @@ public abstract class IMEReceiver {
 			//ModLogger.log("PreeditFormatter.formatMarkedText(\"" + aString + "\", " + position1 + ", " + length1 + ")");
 			int max = aString.length();
 			Tuple3<String, Integer, Boolean> formattedText = PreeditFormatter.formatMarkedText(aString,
-				position1 > max ? max : position1,
+				Math.min(position1, max),
 				position1 + length1 > max ? max - position1 : length1);
 			commitString = formattedText._1();
 			caretPosition = formattedText._2() + 4;//相対値

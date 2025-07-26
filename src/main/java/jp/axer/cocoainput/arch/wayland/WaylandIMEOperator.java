@@ -23,20 +23,19 @@ public class WaylandIMEOperator implements IMEOperator {
 	}
 
 	@Override
-	public void setFocused(boolean arg0) {
-		// TODO Auto-generated method stub
-		if(arg0==focus) {
+	public void setFocused(boolean isFocused) {
+		if(isFocused==focus) {
 			return ;
 		}
-		focus=arg0;
-		Logger.log("setFocusedCalled "+ arg0);
-		if(arg0) {
+		focus=isFocused;
+		Logger.debug("setFocusedCalled "+ isFocused);
+		if(isFocused) {
 			WaylandController.focusedOperator=this;
 			Handle.INSTANCE.focus();
 		}
 		else {
 			if(WaylandController.focusedOperator==this) {
-				owner.insertText("", 0, 0);
+				owner.insertText("");
 				WaylandController.focusedOperator=null;
 				Handle.INSTANCE.unfocus();
 			}

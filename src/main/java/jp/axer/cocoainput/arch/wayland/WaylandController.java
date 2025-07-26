@@ -11,6 +11,7 @@ import org.lwjgl.glfw.GLFWNativeWayland;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Objects;
 
 public class WaylandController implements CocoaInputController {
 
@@ -21,7 +22,7 @@ public class WaylandController implements CocoaInputController {
 
 	Handle.PreeditCallback preedit_callback = (String str, int before, int after) -> {
         if (WaylandController.focusedOperator != null) {
-			toBePreedit = str;
+			toBePreedit = Objects.requireNonNullElse(str, "");
 			preeditBefore = before;
 			preeditAfter = after;
         }
@@ -29,14 +30,14 @@ public class WaylandController implements CocoaInputController {
 
 	Handle.CommitCallback commit_callback = (str) -> {
 		if (WaylandController.focusedOperator != null) {
-			toBeCommit = str;
+			toBeCommit = Objects.requireNonNullElse(str, "");
 		}
 	};
 
 	Handle.DoneCallback done_callback = () -> {
         if (WaylandController.focusedOperator != null) {
-			if(!toBePreedit.isEmpty()) WaylandController.focusedOperator.owner.setMarkedText(toBePreedit, preeditBefore, preeditAfter, 0, 0);
-			if(!toBeCommit.isEmpty() || toBePreedit.isEmpty()) WaylandController.focusedOperator.owner.insertText(toBeCommit, 0, 0);
+			if(!toBePreedit.isEmpty()) focusedOperator.owner.setMarkedText(toBePreedit, preeditBefore, preeditAfter);
+			if(!toBeCommit.isEmpty() || toBePreedit.isEmpty()) focusedOperator.owner.insertText(toBeCommit);
 			preeditBefore = 0;
 			preeditAfter = 0;
 			toBePreedit = "";
@@ -61,19 +62,11 @@ public class WaylandController implements CocoaInputController {
 
 	@Override
 	public IMEOperator generateIMEOperator(IMEReceiver arg0) {
-		// TODO Auto-generated method stub
 		return new WaylandIMEOperator(arg0);
 	}
 
 	@Override
 	public void screenOpenNotify(Screen gui) {
-		try {
-			Field wrapper = gui.getClass().getField("wrapper");
-			wrapper.setAccessible(true);
-			if (wrapper.get(gui) instanceof IMEReceiver)
-				return;
-		} catch (Exception e) {
-			/* relax */}
 		if (WaylandController.focusedOperator != null) {
 			WaylandController.focusedOperator.setFocused(false);
 			WaylandController.focusedOperator = null;

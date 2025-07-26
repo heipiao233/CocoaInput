@@ -36,7 +36,7 @@ public class X11IMEOperator implements IMEOperator {
 		}
 		else {
 			if(X11Controller.focusedOperator==this) {
-				owner.insertText("", 0, 0);
+				owner.insertText("");
 				X11Controller.focusedOperator=null;
 				Handle.INSTANCE.set_focus(0);
 				X11Controller.setupKeyboardEvent();

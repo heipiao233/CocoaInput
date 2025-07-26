@@ -2,7 +2,7 @@ package jp.axer.cocoainput.util;
 
 public interface ConfigPack {
 
-	public static ConfigPack defaultConfig = new ConfigPack() {
+	ConfigPack DEFAULT_CONFIG = new ConfigPack() {
 		@Override
 		public boolean isAdvancedPreeditDraw() {
 			return true;
@@ -13,6 +13,6 @@ public interface ConfigPack {
 		}
 	};
 
-	public boolean isAdvancedPreeditDraw();
-	public boolean isNativeCharTyped();
+	boolean isAdvancedPreeditDraw();
+	boolean isNativeCharTyped();
 }
