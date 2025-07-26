@@ -28,7 +28,6 @@ public class WaylandIMEOperator implements IMEOperator {
 			return ;
 		}
 		focus=isFocused;
-		Logger.debug("setFocusedCalled "+ isFocused);
 		if(isFocused) {
 			WaylandController.focusedOperator=this;
 			Handle.INSTANCE.focus();

@@ -1,7 +1,6 @@
 package jp.axer.cocoainput.loader;
 
 import jp.axer.cocoainput.CocoaInput;
-import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.FCConfig;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,12 +26,12 @@ public class CocoaInputForge {
 
 	private void setup(final FMLCommonSetupEvent event) {
 			this.instance=new CocoaInput("MinecraftForge",ModList.get().getModFileById("cocoainput").getFile().getFilePath().toString());
-			ModLogger.log("Forge config setup");
-			ModLogger.log("Config path:"+FMLPaths.CONFIGDIR.get().resolve("cocoainput.json"));
+			CocoaInput.LOGGER.info("Forge config setup");
+			CocoaInput.LOGGER.info("Config path:"+FMLPaths.CONFIGDIR.get().resolve("cocoainput.json"));
 			FCConfig.init("cocoainput",FMLPaths.CONFIGDIR.get().resolve("cocoainput.json"), FCConfig.class);
 			ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, ()->new ConfigScreenHandler.ConfigScreenFactory((mc,modListScreen)->new FCConfig().getScreen(modListScreen)));
 			CocoaInput.config=new FCConfig();
-			ModLogger.log("ConfigPack:"+CocoaInput.config.isAdvancedPreeditDraw()+" "+CocoaInput.config.isNativeCharTyped());
+			CocoaInput.LOGGER.info("ConfigPack:"+CocoaInput.config.isAdvancedPreeditDraw()+" "+CocoaInput.config.isNativeCharTyped());
 	}
 	@SubscribeEvent
     public void didChangeGui(ScreenEvent.Opening event) {

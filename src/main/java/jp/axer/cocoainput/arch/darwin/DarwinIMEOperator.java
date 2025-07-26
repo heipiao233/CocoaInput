@@ -8,7 +8,6 @@ import jp.axer.cocoainput.arch.darwin.CallbackFunction.Func_insertText;
 import jp.axer.cocoainput.arch.darwin.CallbackFunction.Func_setMarkedText;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
-import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.Rect;
 
 import java.util.UUID;
@@ -25,16 +24,15 @@ public class DarwinIMEOperator implements IMEOperator {
         this.owner = field;
         uuid = UUID.randomUUID().toString();
         insertText_p = (str, position, length) -> {
-            ModLogger.debug("Textfield " + uuid + " received inserted text.");
+            CocoaInput.LOGGER.debug("Textfield " + uuid + " received inserted text.");
             owner.insertText(str);
         };
         setMarkedText_p = (str, position1, length1, position2, length2) -> {
-            ModLogger.debug("MarkedText changed at " + uuid + ".");
+            CocoaInput.LOGGER.debug("MarkedText changed at " + uuid + ".");
             owner.setMarkedText(str, position1, length1);
-            ;
         };
         firstRectForCharacterRange_p = () -> {
-            ModLogger.debug("Called to determine where to draw.");
+            CocoaInput.LOGGER.debug("Called to determine where to draw.");
             Rect point = owner.getRect();
             float[] buff;
             if (point == null) {
@@ -52,7 +50,7 @@ public class DarwinIMEOperator implements IMEOperator {
             ret.write(0, buff, 0, 4);
             return ret;
         };
-        ModLogger.log("IMEOperator addInstance: " + uuid);
+        CocoaInput.LOGGER.info("IMEOperator addInstance: " + uuid);
         Handle.INSTANCE.addInstance(uuid, insertText_p, setMarkedText_p, firstRectForCharacterRange_p);
     }
 
@@ -66,7 +64,7 @@ public class DarwinIMEOperator implements IMEOperator {
 
     public void setFocused(boolean yn) {
         if (yn != isFocused) {
-            ModLogger.log("IMEOperator.setFocused: " + (yn ? "true" : "false"));
+            CocoaInput.LOGGER.info("IMEOperator.setFocused: " + (yn ? "true" : "false"));
             Handle.INSTANCE.setIfReceiveEvent(uuid, yn ? 1 : 0);
             isFocused = yn;
         }

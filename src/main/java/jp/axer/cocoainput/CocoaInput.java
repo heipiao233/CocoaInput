@@ -6,12 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import jp.axer.cocoainput.arch.wayland.WaylandController;
 import jp.axer.cocoainput.plugin.IMEReceiver;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import jp.axer.cocoainput.arch.darwin.DarwinController;
 import jp.axer.cocoainput.arch.dummy.DummyController;
@@ -19,19 +19,17 @@ import jp.axer.cocoainput.arch.win.WinController;
 import jp.axer.cocoainput.arch.x11.X11Controller;
 import jp.axer.cocoainput.plugin.CocoaInputController;
 import jp.axer.cocoainput.util.ConfigPack;
-import jp.axer.cocoainput.util.ModLogger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFW;
 
 public class CocoaInput {
 	private static CocoaInputController controller;
-	private static String zipsource;
 	public static ConfigPack config = ConfigPack.DEFAULT_CONFIG;
+    public static Logger LOGGER = LogManager.getLogger("CocoaInput:Mod");
 	
 	public CocoaInput(String loader, String zipfile) {
-		ModLogger.log("Modloader:" + loader);
-		CocoaInput.zipsource = zipfile;
+		CocoaInput.LOGGER.info("Modloader:" + loader);
 		try {
 			switch (GLFW.glfwGetPlatform()) {
 				case GLFW.GLFW_PLATFORM_COCOA -> CocoaInput.applyController(new DarwinController());
@@ -39,14 +37,14 @@ public class CocoaInput {
 				case GLFW.GLFW_PLATFORM_X11 -> CocoaInput.applyController(new X11Controller());
 				case GLFW.GLFW_PLATFORM_WAYLAND -> CocoaInput.applyController(new WaylandController());
 				default -> {
-					ModLogger.log("CocoaInput cannot find appropriate Controller in current environment.");
+					CocoaInput.LOGGER.info("CocoaInput cannot find appropriate Controller in current environment.");
 					CocoaInput.applyController(new DummyController());
 				}
 			}
-			ModLogger.log("CocoaInput has been initialized.");
+			CocoaInput.LOGGER.info("CocoaInput has been initialized.");
 		} catch (IOException e) {
 			CocoaInput.applyController(new DummyController());
-			ModLogger.error("IO Exception occurs during copying ");
+			CocoaInput.LOGGER.error("IO Exception occurs during copying.", e);
 		}
 	}
 
@@ -56,7 +54,7 @@ public class CocoaInput {
 
 	public static void applyController(CocoaInputController controller) {
 		CocoaInput.controller = controller;
-		ModLogger.log("CocoaInput is now using controller:" + controller.getClass());
+		CocoaInput.LOGGER.info("CocoaInput is now using controller:" + controller.getClass());
 	}
 
 	public static CocoaInputController getController() {
@@ -88,10 +86,10 @@ public class CocoaInput {
 			IOUtils.copy(libFile, fos);
 			fos.close();
 		} catch (IOException e1) {
-			ModLogger.error("Attempted to copy library to ./native/" + libraryName + " but failed.");
+			CocoaInput.LOGGER.error("Attempted to copy library to ./native/" + libraryName + " but failed.");
 			throw e1;
 		}
 		System.setProperty("jna.library.path", nativeDir.getAbsolutePath());
-		ModLogger.log("CocoaInput has copied library to native directory.");
+		CocoaInput.LOGGER.info("CocoaInput has copied library to native directory.");
 	}
 }

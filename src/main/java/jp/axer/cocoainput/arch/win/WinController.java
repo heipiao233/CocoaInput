@@ -1,9 +1,5 @@
 package jp.axer.cocoainput.arch.win;
 import java.io.IOException;
-import java.lang.reflect.Field;
-
-import com.sun.jna.Pointer;
-import com.sun.jna.WString;
 
 import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.arch.win.Handle.DoneCallback;
@@ -12,6 +8,7 @@ import jp.axer.cocoainput.arch.win.Handle.RectCallback;
 import jp.axer.cocoainput.plugin.CocoaInputController;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
+import jp.axer.cocoainput.util.NativeLogger;
 import jp.axer.cocoainput.util.Rect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -23,20 +20,20 @@ public class WinController implements CocoaInputController {
 
 	PreeditCallback pc = (str, cursor, length) -> {
         if(focusedOperator!=null) {
-            Logger.log("marked "+str.toString()+" "+cursor+" "+length);
+            CocoaInput.LOGGER.info("marked "+str.toString()+" "+cursor+" "+length);
             focusedOperator.owner.setMarkedText(str.toString(), cursor, length);
         }
     };
 	DoneCallback dc = str -> {
         if(focusedOperator!=null) {
-            Logger.log("done ("+str.toString()+")");
+            CocoaInput.LOGGER.info("done ("+str.toString()+")");
             focusedOperator.owner.insertText(str.toString());
         }
     };
 
 	RectCallback rc = ret -> {
         if(focusedOperator!=null) {
-            Logger.log("Rect callback");
+            CocoaInput.LOGGER.info("Rect callback");
             Rect point = focusedOperator.owner.getRect();
 			float[] buff;
 			if (point == null) {
@@ -57,13 +54,13 @@ public class WinController implements CocoaInputController {
     };
 
 	public WinController() {
-		Logger.log("This is Windows Controller");
+		CocoaInput.LOGGER.info("This is Windows Controller");
 		try {
 			CocoaInput.copyLibrary("libwincocoainput.dll", "win/libwincocoainput.dll");
 		} catch (IOException e) {
-			Logger.error(e.getMessage(), e);
+			CocoaInput.LOGGER.error(e.getMessage(), e);
 		}
-		Handle.INSTANCE.initialize(GLFWNativeWin32.glfwGetWin32Window(Minecraft.getInstance().getWindow().getWindow()), pc, dc,rc, Logger.clangLog, Logger.clangError, Logger.clangDebug);
+		Handle.INSTANCE.initialize(GLFWNativeWin32.glfwGetWin32Window(Minecraft.getInstance().getWindow().getWindow()), pc, dc,rc, NativeLogger.info, NativeLogger.error, NativeLogger.debug);
 
 	}
 

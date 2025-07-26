@@ -3,7 +3,6 @@ package jp.axer.cocoainput.wrapper;
 import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
-import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.Rect;
 import jp.axer.cocoainput.util.WrapperUtil;
 import net.minecraft.world.level.block.StandingSignBlock;
@@ -16,7 +15,7 @@ public class AbstractSignEditScreenWrapper extends IMEReceiver {
 
 
     public AbstractSignEditScreenWrapper(AbstractSignEditScreen field) {
-        ModLogger.debug("AbstractSignEditScreen init: " + field.hashCode());
+        CocoaInput.LOGGER.debug("AbstractSignEditScreen init: " + field.hashCode());
         owner = field;
         myIME = CocoaInput.getController().generateIMEOperator(this);
         myIME.setFocused(true);

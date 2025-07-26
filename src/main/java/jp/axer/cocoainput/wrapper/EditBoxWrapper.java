@@ -4,7 +4,6 @@ package jp.axer.cocoainput.wrapper;
 import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
-import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.Rect;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
@@ -14,7 +13,7 @@ public class EditBoxWrapper extends IMEReceiver {
     private EditBox owner;
 
     public EditBoxWrapper(EditBox field) {
-        ModLogger.debug("EditBox init: " + field.hashCode());
+        CocoaInput.LOGGER.debug("EditBox init: " + field.hashCode());
         owner = field;
         myIME = CocoaInput.getController().generateIMEOperator(this);
     }

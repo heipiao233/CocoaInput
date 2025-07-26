@@ -18,7 +18,7 @@ public abstract class IMEReceiver {
 
 	private void replaceMarkedText(String text, int pos, int len)
 	{
-		//ModLogger.log("replaceMarkedText() ... (new StringBuffer(\"" + this.getText() + "\").replace(" + pos + ", " + (pos + len) + ", \"" + text + "\")");
+		//CocoaInput.LOGGER.info("replaceMarkedText() ... (new StringBuffer(\"" + this.getText() + "\").replace(" + pos + ", " + (pos + len) + ", \"" + text + "\")");
 		try {
 			this.setText((new StringBuffer(this.getText()))
 					.replace(pos, pos + len, text).toString());
@@ -28,7 +28,7 @@ public abstract class IMEReceiver {
 	}
 
 	public void insertText(String aString) {//確定文字列 現状aString以外の引数は意味をなしてない
-		//ModLogger.log("just comming:(\"" + aString + "\") now:(\"" + getText() + "\") length:" + length);
+		//CocoaInput.LOGGER.info("just comming:(\"" + aString + "\") now:(\"" + getText() + "\") length:" + length);
 		if (!preeditBegin) {
 			originalCursorPosition = this.getCursorPos();
 		}
@@ -77,7 +77,7 @@ public abstract class IMEReceiver {
 			commitString = aString;
 		}
 		else if (CocoaInput.config.isAdvancedPreeditDraw()) {
-			//ModLogger.log("PreeditFormatter.formatMarkedText(\"" + aString + "\", " + position1 + ", " + length1 + ")");
+			//CocoaInput.LOGGER.info("PreeditFormatter.formatMarkedText(\"" + aString + "\", " + position1 + ", " + length1 + ")");
 			int max = aString.length();
 			Tuple3<String, Integer, Boolean> formattedText = PreeditFormatter.formatMarkedText(aString,
 				Math.min(position1, max),

@@ -6,7 +6,6 @@ import java.util.Optional;
 import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
-import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.Rect;
 import jp.axer.cocoainput.util.WrapperUtil;
 import net.minecraft.client.gui.Font;
@@ -21,7 +20,7 @@ public class BookEditScreenWrapper extends IMEReceiver {
     private BookEditScreen owner;
 
     public BookEditScreenWrapper(BookEditScreen field) {
-        ModLogger.log("BookEditScreen init: " + field.hashCode());
+        CocoaInput.LOGGER.info("BookEditScreen init: " + field.hashCode());
         this.allowTextDecoration = () -> !owner.isSigning;
         owner = field;
         myIME = CocoaInput.getController().generateIMEOperator(this);

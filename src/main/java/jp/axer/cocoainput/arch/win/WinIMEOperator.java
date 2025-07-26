@@ -1,5 +1,6 @@
 package jp.axer.cocoainput.arch.win;
 
+import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
 
@@ -29,7 +30,7 @@ public class WinIMEOperator implements IMEOperator {
 			return ;
 		}
 		focus=arg0;
-		Logger.log("setFocusedCalled "+ arg0);
+		CocoaInput.LOGGER.info("setFocusedCalled "+ arg0);
 		if(arg0) {
 			WinController.focusedOperator=this;
 			Handle.INSTANCE.set_focus(1);
