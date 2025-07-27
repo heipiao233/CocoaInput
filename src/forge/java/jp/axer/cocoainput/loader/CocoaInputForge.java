@@ -2,9 +2,7 @@ package jp.axer.cocoainput.loader;
 
 import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.util.FCConfig;
-import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.ConfigScreenHandler;
 
 import net.minecraftforge.fml.ModLoadingContext;
@@ -31,9 +29,5 @@ public class CocoaInputForge {
 			ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, ()->new ConfigScreenHandler.ConfigScreenFactory((mc,modListScreen)->new FCConfig().getScreen(modListScreen)));
 			CocoaInput.config=new FCConfig();
 			CocoaInput.LOGGER.info("ConfigPack:"+CocoaInput.config.isAdvancedPreeditDraw()+" "+CocoaInput.config.isNativeCharTyped());
-	}
-	@SubscribeEvent
-    public void didChangeGui(ScreenEvent.Opening event) {
-		CocoaInput.openScreen(event.getScreen());
 	}
 }
