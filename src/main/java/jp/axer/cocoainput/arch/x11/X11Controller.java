@@ -14,7 +14,6 @@ import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
 import jp.axer.cocoainput.util.NativeLogger;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 
 public class X11Controller implements CocoaInputController {
 
@@ -84,7 +83,7 @@ public class X11Controller implements CocoaInputController {
 	}
 
 	@Override
-	public void screenOpenNotify(Screen gui) {
+	public void clearOperator() {
 		if (X11Controller.focusedOperator != null) {
 			X11Controller.focusedOperator.setFocused(false);
 			X11Controller.focusedOperator = null;

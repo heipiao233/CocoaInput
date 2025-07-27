@@ -31,6 +31,6 @@ public class CocoaInputFabric implements ClientModInitializer {
 			this.onWindowLaunched();
 			return;
 		}
-		CocoaInput.distributeScreen(sc);
+		CocoaInput.openScreen(sc);
 	}
 }

@@ -11,7 +11,6 @@ import jp.axer.cocoainput.plugin.IMEReceiver;
 import jp.axer.cocoainput.util.NativeLogger;
 import jp.axer.cocoainput.util.Rect;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFWNativeWin32;
 
 public class WinController implements CocoaInputController {
@@ -70,7 +69,7 @@ public class WinController implements CocoaInputController {
 		return new WinIMEOperator(arg0);
 	}
 	@Override
-	public void screenOpenNotify(Screen gui) {
+	public void clearOperator() {
 		if (WinController.focusedOperator != null) {
 			//WinIMEOperator old=WinController.focusedOperator;
 			//WinController.focusedOperator=null;

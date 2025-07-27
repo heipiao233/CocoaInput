@@ -59,7 +59,7 @@ public class CocoaInput {
 		return CocoaInput.controller;
 	}
 
-	public static void distributeScreen(Screen sc) {
+	public static void openScreen(Screen sc) {
 		if (CocoaInput.getController() != null) {
 			try {
 				Field wrapper = sc.getClass().getField("cocoainput$wrapper");
@@ -67,7 +67,7 @@ public class CocoaInput {
 				if (wrapper.get(sc) instanceof IMEReceiver)
 					return;
 			} catch (Exception ignored) {}
-			CocoaInput.getController().screenOpenNotify(sc);
+			CocoaInput.getController().clearOperator();
 		}
 	}
 

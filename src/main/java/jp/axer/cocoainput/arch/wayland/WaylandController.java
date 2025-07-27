@@ -6,7 +6,6 @@ import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
 import jp.axer.cocoainput.util.NativeLogger;
 import jp.axer.cocoainput.util.Rect;
-import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFWNativeWayland;
 
 import java.io.IOException;
@@ -66,7 +65,7 @@ public class WaylandController implements CocoaInputController {
 	}
 
 	@Override
-	public void screenOpenNotify(Screen gui) {
+	public void clearOperator() {
 		if (WaylandController.focusedOperator != null) {
 			WaylandController.focusedOperator.setFocused(false);
 			WaylandController.focusedOperator = null;

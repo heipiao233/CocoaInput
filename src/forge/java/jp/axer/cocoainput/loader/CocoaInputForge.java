@@ -34,10 +34,6 @@ public class CocoaInputForge {
 	}
 	@SubscribeEvent
     public void didChangeGui(ScreenEvent.Opening event) {
-		CocoaInput.distributeScreen(event.getScreen());
-	}
-	@SubscribeEvent
-	public void didChangeGui(ScreenEvent.Closing event) {
-		CocoaInput.distributeScreen(event.getScreen());
+		CocoaInput.openScreen(event.getScreen());
 	}
 }
