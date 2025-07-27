@@ -7,8 +7,6 @@ import jp.axer.cocoainput.plugin.CocoaInputController;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
 import jp.axer.cocoainput.util.NativeLogger;
-import net.minecraft.client.gui.screens.Screen;
-
 public class DarwinController implements CocoaInputController {
     public DarwinController() throws IOException {
         CocoaInput.copyLibrary("libcocoainput.dylib", "darwin/libcocoainput.dylib");
@@ -23,7 +21,7 @@ public class DarwinController implements CocoaInputController {
 
 
 	@Override
-	public void screenOpenNotify(Screen gui) {
+	public void clearOperator() {
 		Handle.INSTANCE.refreshInstance();//GUIの切り替えでIMの使用をoffにする
 	}
 }
