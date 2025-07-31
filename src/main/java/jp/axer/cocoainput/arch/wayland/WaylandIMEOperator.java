@@ -13,14 +13,10 @@ public class WaylandIMEOperator implements IMEOperator {
 
 	@Override
 	public void discardMarkedText() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void removeInstance() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
