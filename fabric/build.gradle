@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.2-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -55,7 +55,7 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
 
 	// Minecraft 1.17 (21w19a) upwards uses Java 16.
-	it.options.release = 17
+	it.options.release = 21
 
 	// Check for details.
 	it.options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked" 
@@ -63,7 +63,7 @@ tasks.withType(JavaCompile).configureEach {
 
 java {
 	toolchain {
-		 languageVersion = JavaLanguageVersion.of(17)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.

@@ -5,6 +5,7 @@ import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.plugin.IMEOperator;
 import jp.axer.cocoainput.plugin.IMEReceiver;
 import jp.axer.cocoainput.util.Rect;
+import net.minecraft.Util;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 
@@ -27,11 +28,6 @@ public class EditBoxWrapper extends IMEReceiver {
         myIME.setFocused(newParam);
     }
 
-
-    public void updateCursorCounter() {
-        if (cursorVisible) owner.frame++;
-    }
-
     protected void setText(String text) {
     	owner.value=text;
     }
@@ -41,7 +37,7 @@ public class EditBoxWrapper extends IMEReceiver {
 	}
 
 	protected void setCursorInvisible() {
-		owner.frame=6;
+		owner.focusedTime = (long)(Util.getMillis() / 300) * 300 - 1;
 	}
 
 	protected int getCursorPos() {
@@ -49,7 +45,7 @@ public class EditBoxWrapper extends IMEReceiver {
 	}
 
 	protected void setCursorPos(int p) {
-		owner.moveCursorTo(p);
+		owner.moveCursorTo(p, true);
 	}
 
 	protected void setSelectionPos(int p) {

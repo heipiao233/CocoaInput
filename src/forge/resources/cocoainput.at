@@ -1,0 +1,26 @@
+public net.minecraft.client.gui.components.EditBox font
+public net.minecraft.client.gui.components.EditBox bordered
+public net.minecraft.client.gui.components.EditBox value
+public net.minecraft.client.gui.components.EditBox focusedTime
+public net.minecraft.client.gui.components.EditBox onValueChange(Ljava/lang/String;)V
+
+
+public net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen setMessage(Ljava/lang/String;)V
+public net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen line
+public net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen sign
+public net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen messages
+public net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen signField
+public net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen frame
+
+
+public net.minecraft.client.gui.screens.inventory.BookEditScreen setCurrentPageText(Ljava/lang/String;)V
+public net.minecraft.client.gui.screens.inventory.BookEditScreen getCurrentPageText()Ljava.lang.String;
+public net.minecraft.client.gui.screens.inventory.BookEditScreen title
+public net.minecraft.client.gui.screens.inventory.BookEditScreen isSigning
+public net.minecraft.client.gui.screens.inventory.BookEditScreen pageEdit
+public net.minecraft.client.gui.screens.inventory.BookEditScreen titleEdit
+public net.minecraft.client.gui.screens.inventory.BookEditScreen frameTick
+
+public net.minecraft.client.gui.screens.Screen font
+
+public net.minecraft.client.KeyboardHandler charTyped(JII)V
