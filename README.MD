@@ -1,3 +1,5 @@
+# ⚠️THIS FORK HAS BEEN MOVED TO [CODEBERG](https://codeberg.org/heipiao233/NeoCocoa)⚠️, and rebranded as NeoCocoa, a HARD FORK.
+
 # CocoaInput
 Support IME - Input Method Editor(Japanese,Chinese,Korean) in Minecraft on Multi-platforms(macOS, Windows, X11).
 
